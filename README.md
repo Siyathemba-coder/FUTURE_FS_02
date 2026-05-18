@@ -66,19 +66,10 @@ mini-crm-fullstack/
 Three tables are used:
 
 **admins** — stores admin login accounts
-```sql
-id, email, password (hashed), name, created_at
-```
 
 **leads** — stores client leads
-```sql
-id, name, email, phone, source, status, created_at, updated_at
-```
 
 **notes** — stores follow-up notes per lead
-```sql
-id, lead_id (foreign key), content, created_at
-```
 
 ---
 
@@ -114,21 +105,7 @@ cp .env.example .env
 ```
 
 Open `.env` and fill in your values:
-
-```env
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=your_mysql_password
-DB_NAME=mini_crm
-
-JWT_SECRET=any_long_random_string
-JWT_EXPIRES_IN=8h
-
-PORT=3001
-
-ADMIN_EMAIL=your@email.com
-ADMIN_PASSWORD=YourPassword123!
+.env file must contain the credentials
 ```
 
 ---
@@ -217,19 +194,6 @@ Authorization: Bearer <token>
 - Rate limiting applied — 20 requests/15min on auth, 120 requests/min on general API
 - CORS restricted to the frontend origin
 - `.env` file is excluded from version control via `.gitignore`
-
----
-
-## Troubleshooting
-
-| Error | Fix |
-|-------|-----|
-| `ER_ACCESS_DENIED_ERROR` | Wrong `DB_USER` or `DB_PASSWORD` in `.env` |
-| `ECONNREFUSED` | MySQL isn't running |
-| `ER_BAD_DB_ERROR` | Run `schema.sql` in MySQL Workbench first |
-| `ER_NOT_SUPPORTED_AUTH` | Run: `ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'yourpassword'; FLUSH PRIVILEGES;` |
-| `EADDRINUSE: 3001` | Port already in use — run `npx kill-port 3001` then `npm run dev` |
-| `Failed to fetch` on login | Backend isn't running — start it with `npm run dev` |
 
 ---
 
